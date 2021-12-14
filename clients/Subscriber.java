@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import common.FinalData;
 import common.HelperData;
+import common.TransferMessage;
 
 public class Subscriber {
     private static final int PORT = 8080;
@@ -77,7 +78,12 @@ public class Subscriber {
             while (true) {
                 try {
                     serverMsg = inputStream.readUTF();
-                    System.out.println("Server: " + serverMsg);
+                    try {
+                        TransferMessage transferMessage = new TransferMessage(serverMsg, true);
+                        System.out.println("json " + transferMessage.toString());
+                    } catch (Exception e) {
+                        System.out.println("Server: " + serverMsg);
+                    }
 
                     if (serverMsg.equals(FinalData.RES_BYE)) {
                         break;
