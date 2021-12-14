@@ -127,6 +127,10 @@ public class Publisher {
 
         @Override
         public void run() {
+            PublisherAutoGen publisherAutoGen = new PublisherAutoGen(outputStream);
+            Thread genThread = new Thread(publisherAutoGen);
+            genThread.start();
+
             String inpLine = "";
             while (true) {
                 try {
@@ -136,6 +140,9 @@ public class Publisher {
                         continue;
                     }
                     if (inpLine.equals(FinalData.REQ_QUIT)) {
+                        FinalData.checkSetTopic = false;
+                        FinalData.checkStartPub = false;
+                        FinalData.isAliveThread = false;
                         outputStream.writeUTF(inpLine);
                         break;
                     }

@@ -30,4 +30,6 @@ public class FinalData {
 
     public static boolean checkSubcribeTopic = false;
     public static boolean checkUnSubscribeTopic = false;
+
+    public static boolean isAliveThread = true;
 }
