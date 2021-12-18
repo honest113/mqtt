@@ -7,6 +7,7 @@ public class PublisherData {
     private int id;
     private String name;
     private Topic topic;
+    private String currentStatus;
 
     public PublisherData(String _name) {
         this.id = seed++;
@@ -28,5 +29,13 @@ public class PublisherData {
     public String getAllInfo() {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public void setCurrentStatus(String _s) {
+        this.currentStatus = _s;
+    }
+
+    public String getCurrentStatus() {
+        return this.currentStatus;
     }
 }

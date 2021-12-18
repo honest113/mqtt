@@ -23,6 +23,7 @@ public class FinalData {
     public static final String RES_BAD_REQ = "400 BAD REQUEST";
     public static final String RES_SET_TOPIC_ERROR = "411 SET TOPIC ERROR";
     public static final String RES_START_PUB_FAIL = "412 START PUB FAIL - REGISTER REQUIRE";
+    public static final String RES_BAD_TOPIC_NAME = "423 INVALID TOPIC NAME";
     public static final String RES_BYE = "500 BYE";
 
     public static boolean checkSetTopic = false;

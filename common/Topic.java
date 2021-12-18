@@ -1,5 +1,7 @@
 package common;
 
+import java.util.ArrayList;
+
 import com.google.gson.Gson;
 
 public class Topic {
@@ -35,5 +37,22 @@ public class Topic {
     public String toString() {
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public boolean compatibleWithName(String name) {
+        ArrayList<String> current = HelperData.regexByChar(this.topicName, '/');
+        ArrayList<String> other = HelperData.regexByChar(name, '/');
+
+        if (current.size() != other.size())
+            return false;
+
+        for (int i = 0; i < other.size(); i++) {
+            if ( current.get(i).equals("*") || other.get(i).equals("*") || current.get(i).equals(other.get(i)) )
+                continue;
+            else
+                return false;
+        }
+
+        return true;
     }
 }

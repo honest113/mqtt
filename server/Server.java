@@ -68,6 +68,7 @@ class HandleThread extends Thread {
     final String RES_BAD_REQ = "400 BAD REQUEST";
     final String RES_SET_TOPIC_ERROR = "411 SET TOPIC ERROR";
     final String RES_TOPIC_NOT_FOUND = "413 TOPIC NOT FOUND";
+    final String RES_BAD_TOPIC_NAME = "423 INVALID TOPIC NAME";
     final String RES_BYE = "500 BYE";
 
     // private static final int BUFFER_SIZE = 1024;
@@ -135,12 +136,11 @@ class HandleThread extends Thread {
         return res;
     }
 
-    public Topic getTopicByName(String topicName) {
-        Topic resTopic = null;
+    public ArrayList<Topic> getTopicByName(String topicName) {
+        ArrayList<Topic> resTopic = new ArrayList<Topic>();
         for (Topic iTopic : listTopics) {
-            if (iTopic.getTopicName().equals(topicName)) {
-                resTopic = iTopic;
-                break;
+            if (iTopic.compatibleWithName(topicName)) {
+                resTopic.add(iTopic);
             }
         }
         return resTopic;
@@ -156,6 +156,11 @@ class HandleThread extends Thread {
                 }
             }
         }
+    }
+
+    public boolean checkValidTopicName(String _name) {
+        ArrayList<String> parts = HelperData.regexByChar(_name, '/');
+        return parts.size() >= 3;
     }
 
     @Override
@@ -205,6 +210,15 @@ class HandleThread extends Thread {
                             isSetTopic = false;
                             try {
                                 HelperData helperData = new HelperData(msgFromPublisher, true);
+
+                                //check regex topic name
+                                String topicNameFromPublisher = helperData.getName();
+
+                                if (!checkValidTopicName(topicNameFromPublisher)) {
+                                    outputStream.writeUTF(RES_BAD_TOPIC_NAME);
+                                    continue;
+                                }
+
                                 int topicId = handleTopicName(helperData.getName());
                                 Topic topic = getTopicById(topicId);
                                 if (topic == null) {
@@ -298,12 +312,14 @@ class HandleThread extends Thread {
                             isSubTopic = false;
                             try {
                                 HelperData helperData = new HelperData(msgFromSubscriber, true);
-                                Topic subTopic = getTopicByName(helperData.getName());
-                                if (subTopic == null) {
+                                ArrayList<Topic> subTopic = getTopicByName(helperData.getName());
+                                if (subTopic.size() == 0) {
                                     outputStream.writeUTF(RES_TOPIC_NOT_FOUND);
                                     continue;
                                 } else {
-                                    subscriberData.addTopic(subTopic);
+                                    for (Topic t : subTopic) {
+                                        subscriberData.addTopic(t);
+                                    }
                                     outputStream.writeUTF(RES_SUB_UPDATE_TOPIC);
                                 }
                             } catch (Exception e) {
