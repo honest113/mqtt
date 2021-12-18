@@ -135,12 +135,11 @@ class HandleThread extends Thread {
         return res;
     }
 
-    public Topic getTopicByName(String topicName) {
-        Topic resTopic = null;
+    public ArrayList<Topic> getTopicByName(String topicName) {
+        ArrayList<Topic> resTopic = new ArrayList<Topic>();
         for (Topic iTopic : listTopics) {
-            if (iTopic.getTopicName().equals(topicName)) {
-                resTopic = iTopic;
-                break;
+            if (iTopic.compatibleWithName(topicName)) {
+                resTopic.add(iTopic);
             }
         }
         return resTopic;
@@ -298,12 +297,13 @@ class HandleThread extends Thread {
                             isSubTopic = false;
                             try {
                                 HelperData helperData = new HelperData(msgFromSubscriber, true);
-                                Topic subTopic = getTopicByName(helperData.getName());
-                                if (subTopic == null) {
+                                ArrayList<Topic> subTopic = getTopicByName(helperData.getName());
+                                if (subTopic.size() == 0) {
                                     outputStream.writeUTF(RES_TOPIC_NOT_FOUND);
                                     continue;
                                 } else {
-                                    subscriberData.addTopic(subTopic);
+                                    for(Topic t:subTopic) 
+                                    subscriberData.addTopic(t);
                                     outputStream.writeUTF(RES_SUB_UPDATE_TOPIC);
                                 }
                             } catch (Exception e) {
