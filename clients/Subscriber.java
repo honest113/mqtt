@@ -80,7 +80,7 @@ public class Subscriber {
                     serverMsg = inputStream.readUTF();
                     try {
                         TransferMessage transferMessage = new TransferMessage(serverMsg, true);
-                        System.out.println("json " + transferMessage.toString());
+                        System.out.println("\n" + transferMessage.formatMessage());
                     } catch (Exception e) {
                         System.out.println("Server: " + serverMsg);
                     }
