@@ -72,4 +72,8 @@ public class TransferMessage {
         return gson.toJson(this);
     }
 
+    public String formatMessage() {
+        return "New message from " + this.sourceName + ": " + "\"" +  this.message + "\", for topic \"" + this.topic.getTopicName() + "\" at " + this.datetime;
+    }
+
 }
