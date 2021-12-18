@@ -64,3 +64,40 @@ Server:     206 UPDATE TOPIC SUCCESSFUL
 Subscriber: QUIT
 Server:     500 BYE
 ```
+
+## Các yêu cầu và phản hồi trong chương trình
+
+### Các request được hỗ trợ:
+
+| Câu lệnh              | Đối tượng                 | Giải thích                                    |
+| :--------             | :--------                 | :---------                                    |
+| GET LIST TOPIC        | Publisher & Subscriber    | Lấy thông tin về topic hiện có trên server    |
+| SET TOPIC             | Publisher                 | Set topic cho publisher                       |
+| START PUB             | Publisher                 | Publisher sau khi đăng ký topic có thể dùng lệnh này để bắt đầu phát data (ngẫu nhiên) |
+| STOP PUB              | Publisher                 | Dừng việc publish data                        |
+| GET MY TOPIC          | Subscriber                | Hiển thị các topic mà subscriber đăng ký      |
+| SUB TOPIC             | Subscriber                | Subscriver đăng ký nhận thông tin từ topic    |
+| UNSUB TOPIC           | Subscriber                | Subscriver hủy đăng ký nhận tin từ topic      |
+| QUIT                  | Publisher & Subscriber    | Kết thúc phiên làm việc                       |
+
+### Các phản hồi trả về:
+
+| Phản hồi                              | Đối tượng nhận            | Giải thích                                                    |
+| :--------                             | :--------                 | :---------                                                    |
+| 200 Hello                             | Publisher & Subscriber    | Hello response                                                |
+| 201 LIST TOPIC OK                     | Publisher & Subscriber    | Thông tin về list topic                                       |
+| 202 SET TOPIC OK                      | Publisher                 | Server đã chấp nhận yêu cầu set topic của publisher           |
+| 212 SUB TOPIC OK                      | Subscriber                | Server đã chấp nhận yêu cầu đăng ký topic của subscriber      |
+| 213 UNSUB TOPIC OK                    | Subscriber                | Server đã chấp nhận yêu cầu hủy đăng ký topic của subscriber  |
+| 221 REGISTER DONE                     | Publisher                 | Publisher đã hoàn tất thông tin                               |
+| 203 START PUB OK                      | Publisher                 | Publisher tự động sinh dữ liệu                                |
+| 204 STOP PUB OK                       | Publisher                 | Publisher ngừng tự động sinh dữ liệu                          |
+| 205 RECEIVE MESSAGE OK                | Publisher                 | Publisher publish thông tin thành công                        |
+| 206 UPDATE TOPIC SUCCESSFUL           | Subscriber                | Subscriber cập nhật list topic thành công                     |
+| 208 TOPIC:                            | Subscriber                | List topic đang đăng ký của subscriber                        |
+| 400 BAD REQUEST                       | Publisher & Subscriber    | Không rõ lệnh thực thi                                        |
+| 411 SET TOPIC ERROR                   | Publisher                 | Publisher đăng ký topic thất bại                              |
+| 412 START PUB FAIL - REGISTER REQUIRE | Publisher                 | Publisher chưa hoàn tất thông tin                             |
+| 413 TOPIC NOT FOUND                   | Subscriber                | Không tìm thấy topic                                          |
+| 423 INVALID TOPIC NAME                | Publisher                 | Tên topic không hợp lệ                                        |
+| 500 BYE                               | Publisher & Subscriber    | Kết thúc kết nối                                              |
