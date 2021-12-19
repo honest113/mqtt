@@ -20,7 +20,7 @@ public class PublisherAutoGen implements Runnable {
                 Thread.sleep(100);
                 if (FinalData.checkStartPub) {
                     try {
-                        int randomNumber = ThreadLocalRandom.current().nextInt(1000, 3000);
+                        int randomNumber = ThreadLocalRandom.current().nextInt(2000, 5000);
                         // data random
                         String uuidRandom = UUID.randomUUID().toString();
                         outputStream.writeUTF(uuidRandom);
