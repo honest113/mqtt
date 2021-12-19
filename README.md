@@ -11,6 +11,37 @@
     - Chương trình sinh dữ liệu Publisher
     - Chương trình hiển thị dữ liệu Subscriber
     
+## Chạy chương trình
+
+- run with command
+
+```bash
+# compile common
+$ javac -cp lib/gson-2.8.8.jar common/*.java
+
+# compile server
+$ javac server/*.java
+
+# compile publisher and subscriber
+$ javac clients/*.java
+
+# run server
+$ java -cp .:./lib/gson-2.8.8.jar server.Server
+
+# run publisher
+$ java -cp .:./lib/gson-2.8.8.jar clients.Publisher 127.0.0.1
+
+# run subscriber
+$ java -cp .:./lib/gson-2.8.8.jar clients.Subscriber 127.0.0.1
+```
+
+- run with script file
+
+```bash
+$ chmod +x script.sh
+$ ./script.sh
+```
+
 ## Chức năng chính
 
 - Subscriber kết nối với Broker để đăng ký nhận thông tin về topic (Subscriber được đăng ký nhiều topic)
